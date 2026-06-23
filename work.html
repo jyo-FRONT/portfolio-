@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Work — JIHO LEE</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Pretendard Variable"', 'Pretendard', '"Plus Jakarta Sans"', 'sans-serif'],
+            display: ['"Instrument Serif"', '"Pretendard Variable"', 'Pretendard', 'sans-serif'],
+          },
+          colors: {
+            bg: '#F7F6F3', ink: '#111110', muted: '#6B6B6B', border: '#E5E4E0', tag: '#EBEBEB',
+          },
+        },
+      },
+    }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body { background-color: #F7F6F3; color: #111110; margin: 0; }
+    ::selection { background: #111110; color: #F7F6F3; }
+
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s cubic-bezier(0.25,0.1,0.25,1), transform 0.65s cubic-bezier(0.25,0.1,0.25,1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    .page-in { opacity: 0; transform: translateY(20px); animation: pageIn 0.65s cubic-bezier(0.25,0.1,0.25,1) forwards; }
+    .page-in-d1 { animation-delay: 0.08s; }
+    .page-in-d2 { animation-delay: 0.18s; }
+    @keyframes pageIn { to { opacity: 1; transform: translateY(0); } }
+
+    nav { animation: fadeDown 0.5s ease both; }
+    @keyframes fadeDown { from { opacity:0; transform:translateY(-12px); } to { opacity:1; transform:translateY(0); } }
+    .nav-scrolled { background: rgba(247,246,243,0.9); backdrop-filter: blur(12px); border-bottom: 1px solid #E5E4E0; }
+    .nav-link { transition: color 0.2s ease; }
+    .nav-link:hover { color: #111110; }
+    .ham-line { display: block; width: 20px; height: 1.5px; background: #111110; transition: all 0.28s ease; }
+    .ham-open .ham-line:nth-child(1) { transform: rotate(45deg) translate(4.5px,4.5px); }
+    .ham-open .ham-line:nth-child(2) { opacity: 0; }
+    .ham-open .ham-line:nth-child(3) { transform: rotate(-45deg) translate(4.5px,-4.5px); }
+    #mobile-menu { display: none; }
+    #mobile-menu.open { display: flex; }
+
+    .project-card { display: block; text-decoration: none; color: inherit; }
+    .project-card .thumb { overflow: hidden; border-radius: 16px; }
+    .project-card .thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s cubic-bezier(0.25,0.1,0.25,1); display: block; }
+    .project-card:hover .thumb img { transform: scale(1.03); }
+  </style>
+</head>
+
+<body class="font-sans">
+
+<!-- NAV -->
+<header id="site-nav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+  <nav class="max-w-[1440px] mx-auto px-5 h-[64px] flex items-center justify-between">
+    <a href="index.html" class="font-sans font-semibold text-[15px] tracking-tight text-ink hover:opacity-60 transition-opacity">JIHO LEE</a>
+    <div class="hidden md:flex items-center gap-8">
+      <a href="work.html" class="nav-link font-sans text-[14px] font-semibold text-ink">Work</a>
+      <a href="about.html" class="nav-link font-sans text-[14px] text-muted">About</a>
+      <a href="mailto:prinrusia031226@gmail.com" class="nav-link font-sans text-[14px] text-muted">Contact</a>
+    </div>
+    <button id="ham-btn" onclick="toggleMenu()" class="md:hidden flex flex-col gap-[5px] p-2">
+      <span class="ham-line"></span><span class="ham-line"></span><span class="ham-line"></span>
+    </button>
+  </nav>
+  <div id="mobile-menu" class="md:hidden flex-col bg-[#F7F6F3] border-b border-border px-6 pb-6 pt-2 gap-4">
+    <a href="work.html" class="font-sans text-[15px] font-semibold text-ink">Work</a>
+    <a href="about.html" class="font-sans text-[15px] text-ink">About</a>
+    <a href="mailto:prinrusia031226@gmail.com" class="font-sans text-[15px] text-ink">Contact</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="max-w-[1440px] mx-auto px-5 pt-[120px] pb-16">
+  <h1 class="page-in font-display italic text-ink leading-[1.05] tracking-[-0.02em]" style="font-size:clamp(40px,6vw,80px)">
+    Work
+  </h1>
+  <p class="page-in page-in-d1 font-sans text-[15px] text-muted mt-4">서비스 기획 및 UXUI 디자인 프로젝트</p>
+</section>
+
+<!-- PROJECT GRID -->
+<section class="max-w-[1440px] mx-auto px-5 pb-32">
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-16">
+
+    <!-- Project 1 -->
+    <a href="project-1.html" class="project-card reveal">
+      <div class="thumb aspect-[4/3] mb-5">
+        <img src="images/p1-0001.jpg" alt="원밀리언 공식 앱 리뉴얼">
+      </div>
+      <div class="flex items-center justify-between mb-2">
+        <span class="font-sans text-[11px] tracking-widest uppercase text-muted">서비스 기획 · UXUI 디자인</span>
+        <span class="font-sans text-[12px] text-muted">2021–2023</span>
+      </div>
+      <h2 class="font-sans font-semibold text-[18px] text-ink mb-2">원밀리언 공식 앱 리뉴얼 프로젝트</h2>
+      <p class="font-sans text-[14px] text-muted leading-[1.7]">기존 앱의 UX 구조적 문제와 낮은 콘텐츠 탐색 효율을 개선하기 위해 전면 리뉴얼을 진행했습니다. 온라인 클래스, 라이브 클래스 기능을 새롭게 기획하고 서비스 흐름을 재설계했습니다.</p>
+    </a>
+
+    <!-- Project 2 -->
+    <a href="project-2.html" class="project-card reveal">
+      <div class="thumb aspect-[4/3] mb-5">
+        <img src="images/p2-0001.jpg" alt="KT IPTV 1M HomeDance">
+      </div>
+      <div class="flex items-center justify-between mb-2">
+        <span class="font-sans text-[11px] tracking-widest uppercase text-muted">서비스 기획 · UXUI 디자인</span>
+        <span class="font-sans text-[12px] text-muted">2022</span>
+      </div>
+      <h2 class="font-sans font-semibold text-[18px] text-ink mb-2">KT IPTV 1M HomeDance 앱 런칭</h2>
+      <p class="font-sans text-[14px] text-muted leading-[1.7]">KT와의 협업으로 IPTV 전용 댄스 클래스 앱을 기획하고 런칭했습니다. TV 환경에 맞는 리모컨 기반 UX를 새롭게 설계하고 원밀리언 콘텐츠를 거실로 확장했습니다.</p>
+    </a>
+
+    <!-- Project 3 -->
+    <a href="project-3.html" class="project-card reveal">
+      <div class="thumb aspect-[4/3] mb-5">
+        <img src="images/p3-0001.jpg" alt="원밀리언 Admin 개선">
+      </div>
+      <div class="flex items-center justify-between mb-2">
+        <span class="font-sans text-[11px] tracking-widest uppercase text-muted">서비스 기획 · UXUI 디자인</span>
+        <span class="font-sans text-[12px] text-muted">2022</span>
+      </div>
+      <h2 class="font-sans font-semibold text-[18px] text-ink mb-2">원밀리언 Admin 개선</h2>
+      <p class="font-sans text-[14px] text-muted leading-[1.7]">사내 운영팀의 업무 비효율을 발견하고 자발적으로 TF를 구성해 어드민 ERP 개선 프로젝트를 리딩했습니다. 요구사항 정의부터 QA까지 전 과정을 주도했습니다.</p>
+    </a>
+
+  </div>
+
+</section>
+
+<footer class="border-t border-border">
+  <div class="max-w-[1440px] mx-auto px-5 py-8">
+    <p class="font-sans text-[13px] text-muted">© 2026 JIHO LEE — Portfolio</p>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('site-nav')
+  window.addEventListener('scroll', () => { nav.classList.toggle('nav-scrolled', window.scrollY > 20) }, { passive: true })
+  function toggleMenu() {
+    document.getElementById('ham-btn').classList.toggle('ham-open')
+    document.getElementById('mobile-menu').classList.toggle('open')
+  }
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target) } })
+  }, { threshold: 0.08 })
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el))
+</script>
+</body>
+</html>

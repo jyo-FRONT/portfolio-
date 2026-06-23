@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jiho Lee — Service Planner</title>
+  <meta name="description" content="Service Planner crafting meaningful digital experiences and user-centered product strategies." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Pretendard Variable"', 'Pretendard', '"Plus Jakarta Sans"', 'sans-serif'],
+            display: ['"Instrument Serif"', '"Pretendard Variable"', 'Pretendard', 'sans-serif'],
+          },
+          colors: {
+            bg: '#F7F6F3',
+            ink: '#111110',
+            muted: '#6B6B6B',
+            border: '#E5E4E0',
+            tag: '#EBEBEB',
+          },
+        },
+      },
+    }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body { background-color: #F7F6F3; color: #111110; margin: 0; }
+    ::selection { background: #111110; color: #F7F6F3; }
+
+    /* Reveal animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.25, 0.1, 0.25, 1),
+                  transform 0.65s cubic-bezier(0.25, 0.1, 0.25, 1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    .reveal-d1 { transition-delay: 0.08s; }
+    .reveal-d2 { transition-delay: 0.16s; }
+    .reveal-d3 { transition-delay: 0.24s; }
+    .reveal-d4 { transition-delay: 0.32s; }
+    .reveal-d5 { transition-delay: 0.40s; }
+    .reveal-d6 { transition-delay: 0.48s; }
+
+    /* Hero: animate immediately */
+    .hero-reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      animation: heroIn 0.7s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+    }
+    .hero-d1 { animation-delay: 0.1s; }
+    .hero-d2 { animation-delay: 0.22s; }
+    .hero-d3 { animation-delay: 0.36s; }
+    .hero-d4 { animation-delay: 0.48s; }
+
+    @keyframes heroIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Nav fade in */
+    nav { animation: fadeDown 0.5s ease both; }
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Project card hover */
+    .project-card:hover .card-thumb { filter: brightness(0.96); }
+    .project-card:hover .card-arrow { transform: translateX(4px); }
+    .card-arrow { transition: transform 0.25s ease; display: inline-block; }
+
+    /* Archive row hover */
+    .archive-row { transition: background 0.2s ease; }
+    .archive-row:hover { background: rgba(0,0,0,0.025); border-radius: 6px; }
+
+    /* Hamburger */
+    .ham-line { display: block; width: 20px; height: 1.5px; background: #111110; transition: all 0.28s ease; }
+    .ham-open .ham-line:nth-child(1) { transform: rotate(45deg) translate(4.5px, 4.5px); }
+    .ham-open .ham-line:nth-child(2) { opacity: 0; }
+    .ham-open .ham-line:nth-child(3) { transform: rotate(-45deg) translate(4.5px, -4.5px); }
+
+    /* Scrolled nav */
+    .nav-scrolled { background: rgba(247,246,243,0.9); backdrop-filter: blur(12px); border-bottom: 1px solid #E5E4E0; }
+
+    /* Skill tag hover */
+    .skill-tag { transition: background 0.2s ease; }
+    .skill-tag:hover { background: #D8D8D4; }
+
+    /* Mobile menu */
+    #mobile-menu { display: none; }
+    #mobile-menu.open { display: flex; }
+
+    /* CTA button */
+    .cta-btn { transition: background 0.2s ease, opacity 0.2s ease; }
+    .cta-btn:hover { background: rgba(17,17,16,0.82); }
+    .cta-btn:hover .btn-arrow { transform: translateX(4px); }
+    .btn-arrow { display: inline-block; transition: transform 0.22s ease; }
+
+    /* Nav links */
+    .nav-link { transition: color 0.2s ease; }
+    .nav-link:hover { color: #111110; }
+
+    /* Hide scrollbar for horizontal scroll */
+    .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+    .scrollbar-hide::-webkit-scrollbar { display: none; }
+
+    /* Clamp helpers */
+    .text-hero { font-size: clamp(44px, 7vw, 88px); }
+    .text-section { font-size: clamp(28px, 3vw, 40px); }
+    .text-about-h { font-size: clamp(28px, 3.8vw, 48px); }
+    .text-archive-h { font-size: clamp(28px, 3vw, 40px); }
+    .text-stat { font-size: clamp(28px, 3.5vw, 36px); }
+  </style>
+</head>
+
+<body class="font-sans">
+
+<!-- ─── NAV ─────────────────────────────────────────────────── -->
+<header id="site-nav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+  <nav class="px-10 h-[64px] flex items-center justify-between">
+    <button onclick="window.scrollTo({top:0,behavior:'smooth'})"
+      class="font-sans font-semibold text-[15px] tracking-tight text-ink hover:opacity-60 transition-opacity">
+      JIHO LEE
+    </button>
+
+    <!-- Desktop -->
+    <div class="hidden md:flex items-center gap-8">
+      <button onclick="scrollTo('work')" class="nav-link font-sans text-[14px] text-muted">Work</button>
+      <a href="about.html" class="nav-link font-sans text-[14px] text-muted">About</a>
+      <a href="mailto:prinrusia031226@gmail.com" class="nav-link font-sans text-[14px] text-muted">Contact</a>
+    </div>
+
+    <!-- Hamburger -->
+    <button id="ham-btn" onclick="toggleMenu()" class="md:hidden flex flex-col gap-[5px] p-2" aria-label="메뉴">
+      <span class="ham-line"></span>
+      <span class="ham-line"></span>
+      <span class="ham-line"></span>
+    </button>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="md:hidden flex-col bg-[#F7F6F3] border-b border-border px-10 pb-6 pt-2 gap-4">
+    <button onclick="scrollTo('work');toggleMenu()" class="text-left font-sans text-[15px] text-ink">Work</button>
+    <a href="about.html" class="text-left font-sans text-[15px] text-ink">About</a>
+    <a href="mailto:prinrusia031226@gmail.com" class="font-sans text-[15px] text-ink">Contact</a>
+  </div>
+</header>
+
+
+<!-- ─── HERO ─────────────────────────────────────────────────── -->
+<section class="min-h-screen flex flex-col justify-end pb-20 pt-[120px] px-10">
+  <div class="flex items-end justify-between gap-12">
+
+    <!-- 좌측: 레이블 + 헤딩 + 서브텍스트 -->
+    <div class="max-w-[680px]">
+      <p class="hero-reveal hero-d1 font-sans text-[13px] font-medium tracking-widest uppercase text-muted mb-6">
+        Service Planner
+      </p>
+      <h1 class="hero-reveal hero-d2 font-display leading-[1.1] tracking-[-0.02em] text-ink mb-8" style="text-wrap:balance;font-size:56px">
+        사용자가 원하는 것과<br>비즈니스가 필요한 것,<br><em>그 사이를 설계하는</em> 기획자
+      </h1>
+      <p class="hero-reveal hero-d3 font-sans text-[16px] md:text-[18px] text-muted leading-relaxed">
+        기획부터 출시까지, 5년 이상 앱/웹 프로덕트를 만들어온 서비스 기획자입니다.<br>사용자의 니즈, 비즈니스 목표, 기술적 제약을 하나의 명확한 계획으로 연결합니다.
+      </p>
+    </div>
+
+    <!-- 우측: 스탯 (상하) + 버튼 -->
+    <div class="hero-reveal hero-d4 hidden md:flex flex-col items-end gap-8 shrink-0">
+      <div class="flex flex-col items-end gap-4">
+        <div class="flex items-baseline gap-1.5">
+          <p class="font-display italic text-stat text-ink leading-none">5+</p>
+          <p class="font-sans text-[14px] text-muted">년의 경험</p>
+        </div>
+        <div class="flex items-baseline gap-1.5">
+          <p class="font-display italic text-stat text-ink leading-none">40+</p>
+          <p class="font-sans text-[14px] text-muted">개의 프로젝트</p>
+        </div>
+      </div>
+      <a href="about.html"
+        class="cta-btn group inline-flex items-center gap-3 bg-ink text-bg font-sans text-[14px] font-medium px-6 py-3.5 rounded-full">
+        저에 대해 알아보세요 <span class="btn-arrow">→</span>
+      </a>
+    </div>
+
+    <!-- 모바일 전용: 버튼 + 스탯 아래 배치 -->
+    <div class="hero-reveal hero-d4 md:hidden flex flex-col gap-6 mt-10">
+      <a href="about.html"
+        class="cta-btn group inline-flex items-center gap-3 bg-ink text-bg font-sans text-[14px] font-medium px-6 py-3.5 rounded-full">
+        저에 대해 알아보세요 <span class="btn-arrow">→</span>
+      </a>
+      <div class="flex items-center gap-8">
+        <div class="flex items-baseline gap-1.5">
+          <p class="font-display italic text-stat text-ink leading-none">5+</p>
+          <p class="font-sans text-[14px] text-muted">년의 경험</p>
+        </div>
+        <div class="w-px h-5 bg-border"></div>
+        <div class="flex items-baseline gap-1.5">
+          <p class="font-display italic text-stat text-ink leading-none">40+</p>
+          <p class="font-sans text-[14px] text-muted">개의 프로젝트</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ─── SELECTED WORK ─────────────────────────────────────────── -->
+<section id="work" class="py-24 md:py-32">
+
+  <div class="reveal px-10 mb-12">
+    <p class="font-sans text-[13px] font-medium tracking-widest uppercase text-muted mb-3">Selected Work</p>
+    <h2 class="font-display text-section text-ink tracking-tight leading-[1.1]">대표 프로젝트</h2>
+  </div>
+
+  <!-- Horizontal scroll track -->
+  <div class="overflow-x-auto scrollbar-hide">
+    <div class="flex gap-5 px-10" style="width:max-content;padding-right:20px">
+
+      <!-- Card 1 -->
+      <div class="project-card shrink-0 w-[340px] md:w-[400px]">
+        <div class="card-thumb w-full aspect-[4/3] rounded-2xl mb-5 overflow-hidden flex items-center justify-center relative transition-all duration-500"
+          style="background:#F5E6C8">
+          <div class="flex flex-col items-center gap-3 px-8 text-center">
+            <span class="font-display italic leading-tight" style="font-size:36px;color:#C8A96E">Kakao Order</span>
+            <div class="w-8 h-px" style="background:#C8A96E;opacity:0.5"></div>
+            <span class="font-sans text-[11px] tracking-widest uppercase font-medium opacity-60" style="color:#C8A96E">2024</span>
+          </div>
+        </div>
+        <div class="flex items-start justify-between gap-4 mb-2">
+          <span class="font-sans text-[11px] tracking-wider uppercase text-muted font-medium">Service Planning · UX Strategy</span>
+          <span class="font-sans text-[11px] text-muted shrink-0">2024</span>
+        </div>
+        <h3 class="font-sans font-semibold text-[17px] text-ink mb-2">Kakao Order</h3>
+        <p class="font-sans text-[13px] text-muted leading-relaxed">준비 중인 프로젝트입니다.</p>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="project-card shrink-0 w-[340px] md:w-[400px]">
+        <div class="card-thumb w-full aspect-[4/3] rounded-2xl mb-5 overflow-hidden flex items-center justify-center relative transition-all duration-500"
+          style="background:#D6E8D6">
+          <div class="flex flex-col items-center gap-3 px-8 text-center">
+            <span class="font-display italic leading-tight" style="font-size:30px;color:#5A8A5A">Naver Smart Store</span>
+            <div class="w-8 h-px" style="background:#5A8A5A;opacity:0.5"></div>
+            <span class="font-sans text-[11px] tracking-widest uppercase font-medium opacity-60" style="color:#5A8A5A">2024</span>
+          </div>
+        </div>
+        <div class="flex items-start justify-between gap-4 mb-2">
+          <span class="font-sans text-[11px] tracking-wider uppercase text-muted font-medium">Product Planning · Growth</span>
+          <span class="font-sans text-[11px] text-muted shrink-0">2024</span>
+        </div>
+        <h3 class="font-sans font-semibold text-[17px] text-ink mb-2">Naver Smart Store</h3>
+        <p class="font-sans text-[13px] text-muted leading-relaxed">준비 중인 프로젝트입니다.</p>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="project-card shrink-0 w-[340px] md:w-[400px]">
+        <div class="card-thumb w-full aspect-[4/3] rounded-2xl mb-5 overflow-hidden flex items-center justify-center relative transition-all duration-500"
+          style="background:#D8D8F0">
+          <div class="flex flex-col items-center gap-3 px-8 text-center">
+            <span class="font-display italic leading-tight" style="font-size:30px;color:#5A5AA0">Toss Pay Checkout</span>
+            <div class="w-8 h-px" style="background:#5A5AA0;opacity:0.5"></div>
+            <span class="font-sans text-[11px] tracking-widest uppercase font-medium opacity-60" style="color:#5A5AA0">2023</span>
+          </div>
+        </div>
+        <div class="flex items-start justify-between gap-4 mb-2">
+          <span class="font-sans text-[11px] tracking-wider uppercase text-muted font-medium">Service Planning · IA</span>
+          <span class="font-sans text-[11px] text-muted shrink-0">2023</span>
+        </div>
+        <h3 class="font-sans font-semibold text-[17px] text-ink mb-2">Toss Pay Checkout</h3>
+        <p class="font-sans text-[13px] text-muted leading-relaxed">준비 중인 프로젝트입니다.</p>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="project-card shrink-0 w-[340px] md:w-[400px]">
+        <div class="card-thumb w-full aspect-[4/3] rounded-2xl mb-5 overflow-hidden flex items-center justify-center relative transition-all duration-500"
+          style="background:#F0DDD8">
+          <div class="flex flex-col items-center gap-3 px-8 text-center">
+            <span class="font-display italic leading-tight" style="font-size:30px;color:#A05A4A">Coupang Eats Pro</span>
+            <div class="w-8 h-px" style="background:#A05A4A;opacity:0.5"></div>
+            <span class="font-sans text-[11px] tracking-widest uppercase font-medium opacity-60" style="color:#A05A4A">2023</span>
+          </div>
+        </div>
+        <div class="flex items-start justify-between gap-4 mb-2">
+          <span class="font-sans text-[11px] tracking-wider uppercase text-muted font-medium">Feature Planning · B2B</span>
+          <span class="font-sans text-[11px] text-muted shrink-0">2023</span>
+        </div>
+        <h3 class="font-sans font-semibold text-[17px] text-ink mb-2">Coupang Eats Pro</h3>
+        <p class="font-sans text-[13px] text-muted leading-relaxed">준비 중인 프로젝트입니다.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ─── ARCHIVE ───────────────────────────────────────────────── -->
+<section class="px-10 pb-24 md:pb-32">
+
+  <div class="reveal flex items-end justify-between mb-8">
+    <div>
+      <p class="font-sans text-[13px] font-medium tracking-widest uppercase text-muted mb-2">Archive</p>
+      <h2 class="font-display text-archive-h text-ink tracking-tight leading-[1.1]">모든 프로젝트</h2>
+    </div>
+    <span id="archive-total" class="font-sans text-[13px] text-muted hidden md:block"></span>
+  </div>
+
+  <!-- Table header (desktop) -->
+  <div class="reveal hidden md:grid grid-cols-[72px_1fr_160px_140px] gap-x-6 pb-3 border-b border-border">
+    <span class="font-sans text-[11px] tracking-widest uppercase text-muted">Year</span>
+    <span class="font-sans text-[11px] tracking-widest uppercase text-muted">Project</span>
+    <span class="font-sans text-[11px] tracking-widest uppercase text-muted">Type</span>
+    <span class="font-sans text-[11px] tracking-widest uppercase text-muted text-right">Company</span>
+  </div>
+
+  <!-- Rows -->
+  <div id="archive-list"></div>
+
+  </div>
+</section>
+
+
+
+
+<!-- ─── FOOTER ─────────────────────────────────────────────────── -->
+<footer class="border-t border-border">
+  <div class="reveal px-10 py-8">
+    <p class="font-sans text-[13px] text-muted">© 2026 Jiho Lee — Portfolio</p>
+  </div>
+</footer>
+
+
+<script>
+  /* ── Scroll-based nav style ── */
+  const nav = document.getElementById('site-nav')
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('nav-scrolled', window.scrollY > 20)
+  }, { passive: true })
+
+  /* ── Smooth scroll helper ── */
+  function scrollTo(id) {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  /* ── Hamburger ── */
+  function toggleMenu() {
+    const btn = document.getElementById('ham-btn')
+    const menu = document.getElementById('mobile-menu')
+    btn.classList.toggle('ham-open')
+    menu.classList.toggle('open')
+  }
+
+  /* ── Intersection Observer for reveal ── */
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target) } })
+  }, { threshold: 0.1 })
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el))
+
+  /* ── Archive data & render ── */
+  const allProjects = [
+    { year:'2021–2023', title:'원밀리언 공식 앱 리뉴얼 프로젝트', cat:'서비스 기획 및 UXUI 디자인', co:'원밀리언', link:'project-1.html' },
+    { year:'2022',      title:'KT IPTV 1M HomeDance 앱 런칭',    cat:'서비스 기획 및 UXUI 디자인', co:'원밀리언', link:'project-2.html' },
+    { year:'2022',      title:'원밀리언 Admin 개선',              cat:'서비스 기획 및 UXUI 디자인', co:'원밀리언', link:'project-3.html' },
+  ]
+
+  const list = document.getElementById('archive-list')
+
+  document.getElementById('archive-total').textContent = allProjects.length + ' total'
+  list.innerHTML = allProjects.map(p => `
+    <a href="${p.link}" class="archive-row grid grid-cols-[80px_1fr] md:grid-cols-[72px_1fr_160px_140px] gap-x-6 py-4 border-b border-border -mx-3 px-3 group cursor-pointer no-underline">
+      <span class="font-sans text-[13px] text-muted self-center">${p.year}</span>
+      <span class="font-sans text-[14px] md:text-[15px] font-medium text-ink self-center group-hover:underline underline-offset-4">${p.title}</span>
+      <span class="hidden md:block font-sans text-[13px] text-muted self-center">${p.cat}</span>
+      <span class="hidden md:block font-sans text-[13px] text-muted self-center text-right">${p.co}</span>
+    </a>
+  `).join('')
+</script>
+
+</body>
+</html>
